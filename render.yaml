@@ -1,0 +1,22 @@
+# Render Blueprint: backend only (frontend goes on Vercel). Secrets are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: thali-api
+    runtime: docker
+    region: singapore
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/v1/health
+    envVars:
+      - { key: SPRING_PROFILES_ACTIVE, value: demo }
+      - { key: SEED_DEMO_DATA, value: "true" }
+      - { key: DB_URL, sync: false }          # jdbc:postgresql://<neon-host>/<db>?sslmode=require
+      - { key: DB_USER, sync: false }
+      - { key: DB_PASS, sync: false }
+      - { key: JWT_SECRET, generateValue: true }
+      - { key: CORS_ORIGINS, sync: false }    # your Vercel URL, e.g. https://thali.vercel.app
+      - { key: BREVO_API_KEY, sync: false }
+      - { key: MAIL_FROM, sync: false }       # the sender you verified in Brevo
+      - { key: BOOTSTRAP_ADMIN_EMAIL, sync: false }
+      - { key: BOOTSTRAP_ADMIN_PASSWORD, sync: false }
