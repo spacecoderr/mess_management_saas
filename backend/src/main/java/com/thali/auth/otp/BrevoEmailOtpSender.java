@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,13 @@ public class BrevoEmailOtpSender implements OtpSender {
     private final RestClient client;
     private final AppProperties.Mail mail;
 
-    public BrevoEmailOtpSender(RestClient.Builder builder, AppProperties props) {
+    /** Spring Boot 4 no longer exposes a RestClient.Builder bean by default, so we create our own. */
+    @Autowired
+    public BrevoEmailOtpSender(AppProperties props) {
+        this(RestClient.builder(), props);
+    }
+
+    BrevoEmailOtpSender(RestClient.Builder builder, AppProperties props) {
         this.mail = props.mail();
         this.client = builder.baseUrl("https://api.brevo.com/v3").build();
     }
