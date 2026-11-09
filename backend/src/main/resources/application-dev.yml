@@ -1,0 +1,13 @@
+logging:
+  level:
+    com.thali: DEBUG
+
+# Local-only demo admin (created on first start if no admin exists). Never use these on a real deployment.
+app:
+  seed:
+    enabled: true
+  attendance:
+    enforce-window: false   # scan meals at any time while developing
+  bootstrap:
+    admin-email: admin@thali.local
+    admin-password: Admin@12345

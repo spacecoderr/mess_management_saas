@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.exclude": { "**/.DS_Store": true, "**/target": false },
+  "search.exclude": { "**/node_modules": true, "**/target": true, "**/dist": true },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "disabled",
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -Xmx1G",
+  "[java]": { "editor.tabSize": 4, "editor.defaultFormatter": "redhat.java" },
+  "[typescript][typescriptreact][json][jsonc][css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "tailwindCSS.experimental.classRegex": [["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+  "css.lint.unknownAtRules": "ignore"
+}

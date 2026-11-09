@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Backend (Spring Boot, debug)",
+      "request": "launch",
+      "mainClass": "com.thali.ThaliApplication",
+      "projectName": "thali",
+      "cwd": "${workspaceFolder}/backend",
+      "env": { "SPRING_PROFILES_ACTIVE": "dev" }
+    },
+    {
+      "type": "chrome",
+      "name": "Frontend (Chrome, debug)",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full stack (API + Web)",
+      "configurations": ["Backend (Spring Boot, debug)", "Frontend (Chrome, debug)"],
+      "preLaunchTask": "frontend: dev",
+      "stopAll": true
+    }
+  ]
+}

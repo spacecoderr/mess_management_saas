@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "db: start (docker, optional)",
+      "type": "shell",
+      "command": "docker compose up -d db",
+      "problemMatcher": []
+    },
+    {
+      "label": "backend: run",
+      "type": "shell",
+      "command": "./mvnw spring-boot:run",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "spring-boot",
+        "pattern": { "regexp": "^$" },
+        "background": { "activeOnStart": true, "beginsPattern": "Starting ThaliApplication", "endsPattern": "Started ThaliApplication" }
+      },
+      "presentation": { "panel": "dedicated", "group": "servers" }
+    },
+    {
+      "label": "frontend: dev",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": { "regexp": "^$" },
+        "background": { "activeOnStart": true, "beginsPattern": "VITE v", "endsPattern": "Local:" }
+      },
+      "presentation": { "panel": "dedicated", "group": "servers" }
+    },
+    {
+      "label": "full stack: run both",
+      "dependsOn": ["backend: run", "frontend: dev"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    { "label": "backend: unit tests", "type": "shell", "command": "./mvnw test", "options": { "cwd": "${workspaceFolder}/backend" }, "group": "test", "problemMatcher": [] },
+    { "label": "backend: verify (needs Docker)", "type": "shell", "command": "./mvnw verify", "options": { "cwd": "${workspaceFolder}/backend" }, "group": "test", "problemMatcher": [] },
+    { "label": "frontend: test", "type": "shell", "command": "npm test", "options": { "cwd": "${workspaceFolder}/frontend" }, "group": "test", "problemMatcher": [] },
+    { "label": "frontend: build", "type": "shell", "command": "npm run build", "options": { "cwd": "${workspaceFolder}/frontend" }, "group": "build", "problemMatcher": [] }
+  ]
+}

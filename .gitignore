@@ -1,0 +1,23 @@
+# OS / editor
+.DS_Store
+.idea/
+*.iml
+.vscode/*.log
+# secrets: never commit real credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+# logs / temp
+*.log
+logs/
+# local tool state
+.claude/
+.claude-flow/
+# build output
+node_modules/
+dist/
+target/
+coverage/

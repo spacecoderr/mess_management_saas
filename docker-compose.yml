@@ -1,0 +1,30 @@
+# `docker compose up -d db`            -> Postgres only (use with mvnw + npm run dev)
+# `docker compose --profile app up --build` -> Postgres + API + web, all in containers
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: thali
+      POSTGRES_USER: thali
+      POSTGRES_PASSWORD: thali
+    ports: ["5433:5432"]   # 5433 so it never clashes with a Postgres installed on your Mac
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thali"]
+      interval: 5s
+      retries: 10
+
+  api:
+    profiles: ["app"]
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/thali
+      DB_USER: thali
+      DB_PASS: thali
+      CORS_ORIGINS: http://localhost:5173
+    ports: ["8081:8081"]
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:

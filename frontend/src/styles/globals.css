@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------- design tokens (R G B triplets so Tailwind can add alpha) */
+:root {
+  color-scheme: light;
+  --ink: 15 42 31;            /* body text            #0F2A1F */
+  --ink-soft: 66 98 84;       /* secondary text       #426254 */
+  --heading: 23 59 44;        /* headings             #173B2C */
+  --primary: 31 77 58;        /* forest green         #1F4D3A */
+  --on-primary: 251 247 238;
+  --accent: 173 81 45;        /* terracotta           #AD512D (AA contrast with white) */
+  --on-accent: 255 255 255;
+  --danger: 176 42 42;
+  --success: 38 110 72;
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-strong-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --field-bg: rgba(255, 255, 255, 0.7);
+  --shadow-glass: 0 8px 32px rgba(31, 77, 58, 0.12);
+  --shadow-glass-lg: 0 20px 60px rgba(31, 77, 58, 0.16);
+  --page-1: #FBF7EE; --page-2: #F1EBDB; --page-3: #E4ECDD;
+  --blob-1: #C2CFB6; --blob-2: rgba(232, 160, 132, 0.7); --blob-3: #D5E5DB;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --ink: 244 238 224;
+  --ink-soft: 176 192 180;
+  --heading: 251 247 238;
+  --primary: 168 185 160;     /* sage */
+  --on-primary: 15 42 31;
+  --accent: 217 128 90;       /* soft terracotta */
+  --on-accent: 15 26 21;
+  --danger: 240 128 128;
+  --success: 134 204 160;
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-strong-bg: rgba(255, 255, 255, 0.11);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --field-bg: rgba(255, 255, 255, 0.06);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-glass-lg: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --page-1: #0B1A14; --page-2: #0F2319; --page-3: #0A1612;
+  --blob-1: #1F4D3A; --blob-2: rgba(173, 81, 45, 0.45); --blob-3: #173B2C;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; }   /* keep anchored sections clear of the sticky nav */
+  body { @apply min-h-screen bg-[var(--page-1)] font-sans text-ink antialiased; }
+  h1, h2, h3, h4 { @apply font-display text-heading; }
+  ::selection { @apply bg-accent/30; }
+  :focus-visible { @apply outline-none ring-2 ring-accent/70 ring-offset-2 ring-offset-transparent; }
+}
+
+@layer components {
+  /* Frosted glass surfaces */
+  .glass { @apply rounded-3xl border shadow-glass backdrop-blur-xl; background: var(--glass-bg); border-color: var(--glass-border); }
+  .glass-strong { @apply rounded-3xl border shadow-glass-lg backdrop-blur-2xl; background: var(--glass-strong-bg); border-color: var(--glass-border); }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold
+           transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-55;
+  }
+  .btn-primary { @apply btn bg-primary text-on-primary shadow-glass hover:brightness-110; }
+  .btn-accent { @apply btn bg-accent text-on-accent shadow-glass hover:brightness-110; }
+  .btn-ghost { @apply btn border text-heading backdrop-blur hover:bg-white/30; background: var(--glass-bg); border-color: var(--glass-border); }
+  .btn-danger { @apply btn bg-danger text-white hover:brightness-110; }
+
+  .field {
+    @apply w-full rounded-2xl border px-4 py-3 text-[15px] text-ink outline-none backdrop-blur transition
+           placeholder:text-ink-soft/60 focus:ring-2 focus:ring-accent/60;
+    background: var(--field-bg);
+    border-color: var(--glass-border);
+  }
+  .field[aria-invalid='true'] { @apply border-danger ring-1 ring-danger/40; }
+}
+
+/* Moving mesh background: ivory -> sage -> terracotta glow (dark: deep forest) */
+.mesh-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: linear-gradient(135deg, var(--page-1) 0%, var(--page-2) 45%, var(--page-3) 100%); }
+.mesh-bg .blob { position: absolute; border-radius: 9999px; filter: blur(70px); opacity: 0.55; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

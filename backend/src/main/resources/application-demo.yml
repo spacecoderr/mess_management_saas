@@ -1,0 +1,8 @@
+# Used on the live deployment (Render). All values come from environment variables.
+logging:
+  level:
+    com.thali: INFO
+
+app:
+  seed:
+    enabled: ${SEED_DEMO_DATA:true}
