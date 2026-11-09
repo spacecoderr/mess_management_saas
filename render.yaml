@@ -10,7 +10,7 @@ services:
     healthCheckPath: /api/v1/health
     envVars:
       - { key: SPRING_PROFILES_ACTIVE, value: demo }
-      - { key: SEED_DEMO_DATA, value: "true" }
+      - { key: SEED_DEMO_DATA, value: "false" }   # turn on after the first healthy start (loads demo data once)
       - { key: DB_URL, sync: false }          # jdbc:postgresql://<neon-host>/<db>?sslmode=require
       - { key: DB_USER, sync: false }
       - { key: DB_PASS, sync: false }
